@@ -10,6 +10,7 @@ time=0
 wtime=0
 time0=0
 score=0
+total_try=0
 run=0
 reset_flag=0
 
@@ -27,10 +28,12 @@ def s():
     global run,time,time0
     run=1
     time0=time
+    
        
 def e():
-    global run,score,wtime
+    global run,score,wtime,total_try
     run=0
+    total_try+=1
     if (wtime%10==0 and wtime!=0):
         score+=1
     
@@ -40,13 +43,14 @@ def r():
     time=0
     time0=1
     score=0
+    total_try=0
         
  
 #handler for timer
        
 def tick(label):
   def count():
-    global time,wtime,time0,score,run,reset_flag
+    global time,wtime,time0,score,run,reset_flag,total_try
     time += 1
     if run==0: time0=time
     wtime+=(time-time0)
@@ -54,7 +58,7 @@ def tick(label):
     
     watch=time_out(wtime)
     label.config(text=watch)
-    status.config(text="score "+str(score))
+    status.config(text="score "+str(score)+"/"+str(total_try))
     label.after(100, count)
   count()
     
